@@ -15,10 +15,10 @@ const API_URL = 'https://reqres.in/api/orders';
 const initialFormValues = {
   name: "",
   size: "",
-  jalapeno: true,
-  pineapple: true,
-  bacon: true,
-  roasted_garlic: true,
+  jalapeno: false,
+  pineapple: false,
+  bacon: false,
+  roasted_garlic: false,
   special: "",
 };
 
@@ -28,14 +28,14 @@ const initialFormErrors = {
 };
 
 const initialDisabled = true;
+const initialOrder = [];
 
 const App = () => {
   //STATE
+  const [order, setOrder] = useState(initialOrder);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
-
-
 
 
   //HELPERS
@@ -43,7 +43,9 @@ const App = () => {
 const postPizza = newPizza => {
   axios.post(API_URL, newPizza)
     .then(res=> {
-      console.log(res.data);
+      console.log(res.data); //for MVP requirements
+      setOrder([...res.data, order]); //for testing to put the order in the DOM
+      console.log(order.name);
     })
     .catch(err => console.log(err))
     .finally(() => {
@@ -107,6 +109,11 @@ const postPizza = newPizza => {
       <Route exact path="/">
         <Home />
       </Route>
+      {
+        order.map(piz => {
+          return(<p>{piz.name}</p>)
+        })
+      }
     </div>
   );
 };

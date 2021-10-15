@@ -1,20 +1,20 @@
-describe('testing user-onboarding', () => {
+describe('pizza order form', () => {
     beforeEach(() => {
         // Before each test, we need fresh state!
         // aka, we don't want to rely on state
         // left over from a previous test
-        cy.visit('http://localhost:3000');
+        cy.visit('http://localhost:3000/pizza')
     })
 
     //getters
     const name = () => cy.get('input[name=name]');
-    const size = () => cy.get('input[name=size]');
+    const size = () => cy.get('select[name=size]');
     const jalapeno = () => cy.get('input[name=jalapeno]');
     const bacon = () => cy.get('input[name=bacon]');
     const pineapple = () => cy.get('input[name=pineapple]');
     const roasted_garlic = () => cy.get('input[name=roasted_garlic]');
     const special = () => cy.get('input[name=special]');
-    const submit = () => cy.get("button[id='order-pizza']");
+    const submit = () => cy.get("button[id='order-button']");
 
     it('sanity check to make sure tests work', () => {
         // "it" is a test
@@ -36,65 +36,46 @@ describe('testing user-onboarding', () => {
         submit().should('exist');
     })
 
-    describe('filling out inputs etc', () => {
-        it('can navigate to the url', () => {
-            cy.url().should('include', 'localhost');
+    describe("mvp testing", () => {
+        it('can add text to name and special', () => {
+            name()
+                .should('have.value', '')
+                .type('test content')
+                .should('have.value', 'test content');
+            special()
+                .should('have.value', '')
+                .type('test content')
+                .should('have.value', 'test content');
         })
-        // submit button should start out disabled
-        it('submit button starts out disabled', () => {
-            submit().should('be.disabled');
-        })
-        //can type in inputs
-        it('can type in the inputs and check the box', () => {
-            fname()
-                .should('have.value', '')
-                .type('test content')
-                .should('have.value', 'test content');
-            lname()
-                .should('have.value', '')
-                .type('test content')
-                .should('have.value', 'test content');
-            email()
-                .should('have.value', '')
-                .type('test@test.com')
-                .should('have.value', 'test@test.com');
-            pwd()
-                .should('have.value', '')
-                .type('test content')
-                .should('have.value', 'test content');
-            tos()
+        it('can add multiple toppings', () => {
+            jalapeno()
+                .should('not.be.checked')
+                .check()
+                .should('be.checked');
+            bacon()
+                .should('not.be.checked')
+                .check()
+                .should('be.checked');
+            pineapple()
+                .should('not.be.checked')
+                .check()
+                .should('be.checked');
+            roasted_garlic()
                 .should('not.be.checked')
                 .check()
                 .should('be.checked');
         })
-    })
-    describe('testing submit', () => {
-        it('submit is enabled when shit is good', () => {
-            fname().type('testing');
-            lname().type('testing');
-            email().type('testing@test.com');
-            pwd().type('testing');
-            tos().check();
-            submit().should('not.be.disabled');
-        })
-        it('submit populates the dom', () => {
-            fname().type('Wendell');
-            lname().type('Berry');
-            email().type('nocontact@doesnthaveone.com');
-            pwd().type('worldendingfire');
-            tos().check();
+        it('can submit the form', () => {
+            name().type("Casey Y. Chump");
+            special().type("extra jalapenos");
+            size().select('absurd');
+            jalapeno().check();
+            bacon().check();
+            pineapple().check();
+            roasted_garlic().check();
             submit().click();
-            cy.contains('Wendell');
-        })
-    })
-    describe('testing validation', () => {
-        //no first
-        it('testing no first name', () => {
-            lname().type('Berry');
-            email().type('nocontact@doesnthaveone.com');
-            pwd().type('worldendingfire');
-            tos().check();
-            submit().should('be.disabled');
+            cy.spy(window.console, 'log').as('console.log');
+            cy.get('@console.log').should('be.calledWith', "Casey Y. Chump");
         })
         
     })
