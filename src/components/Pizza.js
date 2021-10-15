@@ -19,9 +19,6 @@ const Pizza = (props) => {
     return (
         <div className="pizza-wrapper">
             <form id="pizza-form" onSubmit={onSubmit}>
-                <div className="errors">
-                    {/* {fill out with error text from validation} */}
-                </div>
                 <div className="inputs">
                     <label>Your Name: 
                         <input
@@ -85,6 +82,10 @@ const Pizza = (props) => {
                             onChange={onChange}
                             value={values.special} />
                     </label>
+                    <div className="errors">
+                        <div>{errors.name}</div>
+                        <div>{errors.size}</div>
+                    </div>
                     <div className="submit">
                         <button id='order-button' disabled={disabled}>submit</button>
                     </div>

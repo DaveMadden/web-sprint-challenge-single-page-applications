@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 import { Route, Link } from 'react-router-dom';
+import * as yup from 'yup';
+import schema from './validation/formSchema';
 
 //custom components
 
@@ -43,19 +45,27 @@ const App = () => {
 
   //EVENT HANDLERS
   const inputChange = (name, value) => {
-    console.log('input change: ', name, value); //PLACEHOLDER
-    // validate(name, value);
+    // console.log('input change: ', name, value); //PLACEHOLDER
+    validate(name, value);
     setFormValues({...formValues, [name]:value});
-    console.log(formValues);
+    // console.log(formValues);
   }
 
   const formSubmit = () => {
     console.log("formSubmit run in App.js");
   }
 
-  //const validate = (name, value) => {};
+  const validate = (name, value) => {
+    yup.reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]:''}))
+      .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
+  }
 
   //SIDE EFFECTS
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
+  }, [formValues]);
 
   return (
     <div className="App">
