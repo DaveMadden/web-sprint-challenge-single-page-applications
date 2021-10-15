@@ -65,7 +65,7 @@ describe('pizza order form', () => {
                 .check()
                 .should('be.checked');
         })
-        it('can submit the form', () => {
+        it('can submit the form properly', () => {
             name().type("Casey Y. Chump");
             special().type("extra jalapenos");
             size().select('absurd');
@@ -74,8 +74,9 @@ describe('pizza order form', () => {
             pineapple().check();
             roasted_garlic().check();
             submit().click();
-            cy.spy(window.console, 'log').as('console.log');
-            cy.get('@console.log').should('be.calledWith', "Casey Y. Chump");
+            //how to tell if submitted?
+            cy.contains('Casey Y. Chump');
+            name().should('have.value', '')
         })
         
     })

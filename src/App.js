@@ -44,8 +44,8 @@ const postPizza = newPizza => {
   axios.post(API_URL, newPizza)
     .then(res=> {
       console.log(res.data); //for MVP requirements
-      setOrder([...res.data, order]); //for testing to put the order in the DOM
-      console.log(order.name);
+      setOrder([res.data, ...order]); //for testing to put the order in the DOM
+      // console.log(order.name);
     })
     .catch(err => console.log(err))
     .finally(() => {
@@ -111,7 +111,7 @@ const postPizza = newPizza => {
       </Route>
       {
         order.map(piz => {
-          return(<p>{piz.name}</p>)
+          return(<p key={piz.id}>{piz.name} ordered a {piz.size} pizza. (order #{piz.id})</p>)
         })
       }
     </div>
