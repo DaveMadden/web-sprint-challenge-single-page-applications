@@ -27,6 +27,7 @@ const Pizza = (props) => {
                         <input
                             type="text"
                             id="name-input"
+                            name="name"
                             onChange={onChange}
                             value={values.name} />
                     </label>
@@ -80,6 +81,7 @@ const Pizza = (props) => {
                         <input
                             type="text"
                             id="special-text"
+                            name="special"
                             onChange={onChange}
                             value={values.special} />
                     </label>

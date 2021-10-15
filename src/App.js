@@ -13,10 +13,10 @@ const API_URL = 'https://reqres.in/api/orders';
 const initialFormValues = {
   name: "",
   size: "",
-  jalapeno: false,
-  pineapple: false,
-  bacon: false,
-  roasted_garlic: false,
+  jalapeno: true,
+  pineapple: true,
+  bacon: true,
+  roasted_garlic: true,
   special: "",
 };
 
