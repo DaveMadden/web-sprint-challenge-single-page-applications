@@ -111,7 +111,7 @@ const postPizza = newPizza => {
       </Route>
       {
         order.map(piz => {
-          return(<p key={piz.id}>{piz.name} ordered a {piz.size} pizza. (order #{piz.id})</p>)
+          return(<p key={piz.id}>{piz.name} ordered {piz.size === 'absurd'? "an" : "a"} {piz.size} pizza. (order #{piz.id})</p>)
         })
       }
     </div>
