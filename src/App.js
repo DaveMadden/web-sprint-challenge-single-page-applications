@@ -40,7 +40,16 @@ const App = () => {
 
   //HELPERS
 
-
+const postPizza = newPizza => {
+  axios.post(API_URL, newPizza)
+    .then(res=> {
+      console.log(res.data);
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
+      setFormValues(initialFormValues)
+    })
+}
 
 
   //EVENT HANDLERS
@@ -52,7 +61,18 @@ const App = () => {
   }
 
   const formSubmit = () => {
-    console.log("formSubmit run in App.js");
+    // console.log("formSubmit run in App.js");
+    const newPizza = {
+      name: formValues.name.trim(),
+      size: formValues.size,
+      jalapeno: formValues.jalapeno,
+      bacon: formValues.bacon,
+      pineapple: formValues.pineapple,
+      roasted_garlic: formValues.roasted_garlic,
+      special: formValues.special.trim(),
+    }
+    // console.log(newPizza);
+    postPizza(newPizza);
   }
 
   const validate = (name, value) => {
