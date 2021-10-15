@@ -46,3 +46,10 @@ nav {
   display: flex;
   justify-content: space-around;
 }
+
+#pizza-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
