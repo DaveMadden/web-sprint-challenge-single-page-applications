@@ -18,13 +18,45 @@ const initialFormValues = {
   bacon: false,
   roasted_garlic: false,
   special: "",
-}
+};
+
+const initialFormErrors = {
+  name: "",
+  size: "",
+};
+
+const initialDisabled = true;
 
 const App = () => {
-  //setting states
+  //STATE
   const [formValues, setFormValues] = useState(initialFormValues);
-  console.log(formValues);
-  
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [disabled, setDisabled] = useState(initialDisabled);
+
+
+
+
+  //HELPERS
+
+
+
+
+  //EVENT HANDLERS
+  const inputChange = (name, value) => {
+    console.log('input change: ', name, value); //PLACEHOLDER
+    // validate(name, value);
+    setFormValues({...formValues, [name]:value});
+    console.log(formValues);
+  }
+
+  const formSubmit = () => {
+    console.log("formSubmit run in App.js");
+  }
+
+  //const validate = (name, value) => {};
+
+  //SIDE EFFECTS
+
   return (
     <div className="App">
       <header>
@@ -36,6 +68,10 @@ const App = () => {
       <Route path="/pizza">
         <Pizza 
           values={formValues}
+          change={inputChange}
+          submit={formSubmit}
+          disabled={disabled}
+          errors={formErrors}
         />
       </Route>
       <Route exact path="/">

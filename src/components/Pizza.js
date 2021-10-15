@@ -1,26 +1,21 @@
 import React from 'react';
 
 const Pizza = (props) => {
-    const { values } = props;
+    const { values, change, submit, disabled, errors } = props;
     // console.log(values);
 
     const onSubmit = evt => {
         evt.preventDefault();
-        console.log("onSubmit triggered in Pizza.js");
+        // console.log("onSubmit triggered in Pizza.js");
+        submit();
     }
     const onChange = evt => {
         const { name, value, checked, type } = evt.target;
         const valueToUse = type === "checkbox" ? checked : value;
-        // change(name, valueToUse);
-        console.log(`onChange in Pizza.js: ${name} - ${valueToUse}`);
+        change(name, valueToUse);
+        // console.log(`onChange in Pizza.js: ${name} - ${valueToUse}`);
     }
 
-
-//name input
-//dropdown for size
-//checklist for toppings
-//text special instructions
-//order button
     return (
         <div className="pizza-wrapper">
             <form id="pizza-form" onSubmit={onSubmit}>
@@ -81,8 +76,16 @@ const Pizza = (props) => {
                         />
                     </label>
                     <br />
-                    
-
+                    <label>Special Instructions: 
+                        <input
+                            type="text"
+                            id="special-text"
+                            onChange={onChange}
+                            value={values.special} />
+                    </label>
+                    <div className="submit">
+                        <button id='order-button' disabled={disabled}>submit</button>
+                    </div>
 
                 </div>
             </form>
